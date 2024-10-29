@@ -25,7 +25,7 @@ public class OptionsMenu : MonoBehaviour {
 
     public void ToggleInvertMouse()
     {
-        isInverted = isInverted ? false : true;
+        isInverted = !isInverted;
         Debug.Log("Invert value = " + isInverted);
     }
 
