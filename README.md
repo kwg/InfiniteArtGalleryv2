@@ -2,7 +2,7 @@
 
 ## About
 
-This repository is for IAG version 2. The original IAG repository can be found here (link). The project is in the early stages of conversion and setup. This space will be updated.
+This repository is for IAG version 2. The original IAG repository can be found here ([link](https://github.com/kwg/InfiniteArtGallery)). The project is in the early stages of conversion and setup. This space will be updated.
 
 The Infinite Art Gallery is an experimental project to generate various forms of artwork using evoloving neural networks. This work expands on methods developed by Picbreeder: A Case Study in Collaborative Evolutionary Exploration of Design Space (Secretan et al 2008), Evolving 3D objects with a generative encoding inspired by developmental biology (Clune and Lipson 2011), and AnimationBreeder and ThreeDimensionalAnimationBreeder (Tweaser, Gillespie, and Schrum 2018) in its curent form, and has planned features based on Interactively Evolving Compositional Sound Synthesis Networks (Jónsson, Hoover, and Risi 2015) and Unshackling Evolution: Evolving Soft Robots with Multiple Materials and a Powerful Generative Encoding (Cheney, et al 2013)
 
