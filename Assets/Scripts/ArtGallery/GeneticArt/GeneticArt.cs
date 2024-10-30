@@ -39,7 +39,7 @@ public class GeneticArt
     public void SetGenotype(TWEANNGenotype geno)
     {
 
-        this.geno = geno;
+        this.geno = geno.Copy();
     }
 
     public TWEANNGenotype GetGenotype()
