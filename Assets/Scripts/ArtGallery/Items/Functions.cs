@@ -40,7 +40,7 @@ public class Functions : MonoBehaviour {
         //ag = FindObjectOfType<ArtGallery>();
         //availableFunctions = ag.GetAvailableActivationFunctions();
         numberOfFunctionSlots = ActivationFunctions.GetActiveFunctionCount();
-        Debug.Log("Number of function slots = " + numberOfFunctionSlots);
+        //Debug.Log("Number of function slots = " + numberOfFunctionSlots);
         hud = HUD.GetComponent<HUD>();
         functionSlots = hud.AddSlots(tray, numberOfFunctionSlots);
         ActiveSlot = 0;
@@ -58,7 +58,7 @@ public class Functions : MonoBehaviour {
 
         foreach (FTYPE f in ActivationFunctions.GetFunctionList())
         {
-            Debug.Log("Building tray for " + f.ToString());
+            //Debug.Log("Building tray for " + f.ToString());
             SavedFunction sf = new SavedFunction
             {
                 fTYPE = f
