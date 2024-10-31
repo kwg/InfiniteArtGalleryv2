@@ -245,7 +245,7 @@ public class Room : MonoBehaviour
                 destination.z -= bump;
             }
 
-            destination.y = 2.5f; // Fix exit height for player (player is 1.8 tall, portal is 5, center of portal is 2.5, center of player is 0.9. 2.5 - 0.9 = 1.6)
+            destination.y = 1f; // Fix exit height for player (player is 1.8 tall, portal is 5, center of portal is 2.5, center of player is 0.9. 2.5 - 0.9 = 1.6)
 
             player.transform.position = destination;
 

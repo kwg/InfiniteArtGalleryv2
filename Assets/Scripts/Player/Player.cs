@@ -97,7 +97,7 @@ public class Player : MonoBehaviour {
         /* TAG: portal */
         if(collider.gameObject.tag == "portal")
         {
-            if(ArtGallery.DEBUG_LEVEL > ArtGallery.DEBUG.NONE) Debug.Log("player activating portal " + collider.gameObject.GetComponent<Portal>().PortalID);
+            //Debug.Log("player activating portal " + collider.gameObject.GetComponent<Portal>().PortalID);
             /* Tell portal controller to handle collision between specified portal and this player */
             FindObjectOfType<Room>().DoTeleport(this, collider.gameObject.GetComponent<Portal>().PortalID);
         }
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour {
         /* TAG: sculpturePlatform */
         if (collider.gameObject.tag == "sculpturePlatform")
         {
-            if (ArtGallery.DEBUG_LEVEL > ArtGallery.DEBUG.NONE) Debug.Log("player activating sculpture teleport ");
+            //Debug.Log("player activating sculpture teleport ");
             /* Tell portal controller to handle collision between specified portal and this player */
             FindObjectOfType<Room>().DoTeleport(this, collider.gameObject.GetComponent<SculpturePlatform>().PortalID + 4);
 
@@ -114,6 +114,7 @@ public class Player : MonoBehaviour {
         /* TAG: Function Pickup */
         if (collider.tag == "FunctionPickup")
         {
+            //Debug.Log("player sollided with function pickup " + collider.gameObject.GetComponent<FunctionPickup>().ToString());
             FunctionPickup fp = collider.GetComponent<FunctionPickup>();
             if (!functions.HasFunction(fp.Function))
             {
@@ -124,7 +125,7 @@ public class Player : MonoBehaviour {
             else
             {
                 //Destroy(fp.gameObject);
-
+                Debug.LogError("Has Fuction!");
             }
         }
     }
