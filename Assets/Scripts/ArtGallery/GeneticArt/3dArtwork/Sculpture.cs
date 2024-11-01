@@ -212,7 +212,7 @@ public class Sculpture : IProcessable {
 
     private void AddVoxelToSculpture(Vector3 pos)
     {
-        Color voxelColor = voxelMap[(int)pos.x, (int)pos.y, (int)pos.z].Color;
+        Color32 voxelColor = voxelMap[(int)pos.x, (int)pos.y, (int)pos.z].Color;
         
         for (int face = 0; face < 6; face++)
         {
