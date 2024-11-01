@@ -89,6 +89,7 @@ public class Portal : MonoBehaviour, IUnityGeneticArtwork {
     /// </summary>
     private void RefreshDecoration()
     {
-        _rend.material.SetTexture("_MainTex", _displayImg);
+        _rend.material.SetTexture("_BaseMap", _displayImg);
+        _rend.material.SetTexture("_EmissionMap", _displayImg);
     }
 }
