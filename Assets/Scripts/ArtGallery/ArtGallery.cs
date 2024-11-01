@@ -153,7 +153,7 @@ public class ArtGallery : MonoBehaviour {
         ActivationFunctions.ActivateFunction(availableFunctions);
         foreach(FTYPE f in ActivationFunctions.GetFunctionList())
         {
-            UnityEngine.Debug.Log("useableFunctions = " + f.ToString());
+            //UnityEngine.Debug.Log("useableFunctions = " + f.ToString());
         }
         //availableFunctions = ActivationFunctions.GetInactiveFunctions();
         //if (activeFunctions == null)

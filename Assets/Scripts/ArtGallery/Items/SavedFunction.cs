@@ -19,7 +19,7 @@ public class SavedFunction : IFunctionItem {
 
     public void GenerateThumbnail()
     {
-        Debug.Log("generating thumb for " + fTYPE.ToString());
+        //Debug.Log("generating thumb for " + fTYPE.ToString());
         Texture2D thumb = new Texture2D(32, 32, TextureFormat.ARGB32, false);
         //create a new texture
         Color[] pixels = new Color[thumb.width * thumb.height];

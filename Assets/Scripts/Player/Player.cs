@@ -1,45 +1,93 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour {
 
     public Inventory inventory { get; set; } // reference to the game inventory
     public Functions functions { get; set; }
 
-    new Camera camera;
-    ArtGallery ag;
-    public GameObject FPC;
-    private bool isInverted;
+    [SerializeField] private float playerMoveSpeed;
+    private bool isSprinting = false;
+    [SerializeField] private float playerLookSpeed;
+    [SerializeField] private float smoothInputSpeed = 0.2f;
+    private Vector2 smoothInputVelocity;
+
+
+    private PlayerControls playerControls;
+    private CharacterController controller;
+    private Vector3 playerMovement;
+    private Rigidbody rb;
+
+
+    private Camera playerCamera;
+    [SerializeField] Transform cameraMount;
+    private Vector2 playerLook;
+    private float pitch = 0f;
+    [SerializeField] private float maxPitch = 89f;
+    [SerializeField] private bool isInverted = false;
+
+    private ArtGallery ag;
+
     float interactionDistance = 30f; // maximum distance to check for raycast collision
-    FirstPersonController controller;
 
 
     public void Start()
     {
-        controller = FPC.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
-        camera = FindObjectOfType<Camera>();
         ag = ArtGallery.GetArtGallery();
+
+        playerCamera = cameraMount.gameObject.AddComponent<Camera>();
+        playerCamera.transform.parent = cameraMount;
+        playerLook = Vector2.zero;
+
+        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
+
         ag.player = this;
+        playerMovement = Vector3.zero;
 
-        //FPC = gameObject;
         isInverted = ag.invertY;
-        float yAxis = controller.m_MouseLook.YSensitivity;
-        if (!isInverted && Mathf.Sign(yAxis) < 0)
-        {
-            yAxis = yAxis * -1;
-            controller.m_MouseLook.YSensitivity = yAxis;
 
-        }
-        else if (isInverted && Mathf.Sign(yAxis) > 0)
-        {
-            yAxis = yAxis * -1;
-            controller.m_MouseLook.YSensitivity = yAxis;
-        }
+        playerControls = new PlayerControls();
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
-    
+
+    private void OnMove(InputValue value)
+    {
+        playerMovement = new Vector3(value.Get<Vector2>().x, 0f, value.Get<Vector2>().y);
+    }
+
+    private void OnSprint(InputValue value)
+    {
+        isSprinting = value.isPressed;
+    }
+
+    private void PlayerMove()
+    {
+        float mod = playerMoveSpeed * Time.deltaTime;
+        float sprint = isSprinting ? 2 : 1;
+
+        Vector3 move = transform.right * playerMovement.x + 0f * transform.up + transform.forward * playerMovement.z * sprint;
+        move *= mod;
+        controller.Move(move);
+        //Mathf.Clamp(move.magnitude, 0, playerSpeed);
+    }
+
+    private void OnLook(InputValue value)
+    {
+        playerLook = value.Get<Vector2>();
+    }
+
+    private void PlayerLook()
+    {
+        pitch += playerLook.y * playerLookSpeed * (isInverted ? 1 : -1);
+        pitch = Mathf.Clamp(pitch, -maxPitch, maxPitch);
+        cameraMount.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+
+        transform.Rotate(0, playerLook.x * playerLookSpeed, 0);
+    }
+
     /// <summary>
     /// Handle collisions
     /// </summary>
@@ -49,7 +97,7 @@ public class Player : MonoBehaviour {
         /* TAG: portal */
         if(collider.gameObject.tag == "portal")
         {
-            if(ArtGallery.DEBUG_LEVEL > ArtGallery.DEBUG.NONE) Debug.Log("player activating portal " + collider.gameObject.GetComponent<Portal>().PortalID);
+            //Debug.Log("player activating portal " + collider.gameObject.GetComponent<Portal>().PortalID);
             /* Tell portal controller to handle collision between specified portal and this player */
             FindObjectOfType<Room>().DoTeleport(this, collider.gameObject.GetComponent<Portal>().PortalID);
         }
@@ -57,7 +105,7 @@ public class Player : MonoBehaviour {
         /* TAG: sculpturePlatform */
         if (collider.gameObject.tag == "sculpturePlatform")
         {
-            if (ArtGallery.DEBUG_LEVEL > ArtGallery.DEBUG.NONE) Debug.Log("player activating sculpture teleport ");
+            //Debug.Log("player activating sculpture teleport ");
             /* Tell portal controller to handle collision between specified portal and this player */
             FindObjectOfType<Room>().DoTeleport(this, collider.gameObject.GetComponent<SculpturePlatform>().PortalID + 4);
 
@@ -66,6 +114,7 @@ public class Player : MonoBehaviour {
         /* TAG: Function Pickup */
         if (collider.tag == "FunctionPickup")
         {
+            //Debug.Log("player sollided with function pickup " + collider.gameObject.GetComponent<FunctionPickup>().ToString());
             FunctionPickup fp = collider.GetComponent<FunctionPickup>();
             if (!functions.HasFunction(fp.Function))
             {
@@ -76,30 +125,14 @@ public class Player : MonoBehaviour {
             else
             {
                 //Destroy(fp.gameObject);
-
+                Debug.LogError("Has Fuction!");
             }
         }
     }
 
     public void Update()
     {
-        //FIXME find a good place to map all the key/joy binds and ref that here
-        if (Input.GetKeyDown(KeyCode.I)) // invert mouse
-        {
-            controller.m_MouseLook.YSensitivity = controller.m_MouseLook.YSensitivity * -1;
-        }
-
-        Vector3 vec = FPC.transform.position;
-        if (vec.y < -10)
-        {
-            vec.y = 10f;
-            FPC.transform.position = vec;
-        }
-
-    }
-
-    public void TogglePlayerControlls(bool on)
-    {
-        controller.enabled = on;
+        PlayerLook();
+        PlayerMove();
     }
 }

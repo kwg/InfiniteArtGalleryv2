@@ -204,7 +204,7 @@ public class Room : MonoBehaviour
     public void DoTeleport(Player player, int portalID)
     {
         int destinationID = 0;
-        float bump = 0.25f;
+        float bump = 1.25f;
         if (!Locked || Locked) //HACK PROTOTYPE - disabled lockout to prevent players getting stuck
         {
             if (debug) Debug.Log("starting teleport form portal " + portalID);
@@ -245,7 +245,7 @@ public class Room : MonoBehaviour
                 destination.z -= bump;
             }
 
-            destination.y -= 1.6f; // Fix exit height for player (player is 1.8 tall, portal is 5, center of portal is 2.5, center of player is 0.9. 2.5 - 0.9 = 1.6)
+            destination.y = 1f; // Fix exit height for player (player is 1.8 tall, portal is 5, center of portal is 2.5, center of player is 0.9. 2.5 - 0.9 = 1.6)
 
             player.transform.position = destination;
 

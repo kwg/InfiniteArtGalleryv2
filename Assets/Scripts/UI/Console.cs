@@ -31,7 +31,7 @@ public class Console : MonoBehaviour
         gameObject.SetActive(consoleIsActive);
         if (on)
         {
-            player.TogglePlayerControlls(false);
+            //player.TogglePlayerControlls(false);
             Cursor.lockState = CursorLockMode.Confined;
             consoleInputField.ActivateInputField();
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(consoleInputField.gameObject, null);
@@ -42,7 +42,7 @@ public class Console : MonoBehaviour
         {
             consoleInputField.DeactivateInputField();
             Cursor.lockState = CursorLockMode.Confined;
-            player.TogglePlayerControlls(true);
+            //player.TogglePlayerControlls(true);
             //Cursor.visible = false;
         }
         //consoleIsActive = on;
