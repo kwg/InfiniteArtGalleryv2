@@ -11,13 +11,11 @@ public class SculpturePlatform : MonoBehaviour, IUnityGeneticArtwork {
     private Sculpture _sculpture;
     private bool initialized;
 
-    // Use this for initialization
     void Start () {
 
         _rend = GetComponent<Renderer>();
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
     {
         if (initialized)
